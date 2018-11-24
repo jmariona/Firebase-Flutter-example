@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
 
 void main()=> runApp(
   MaterialApp(
@@ -44,6 +47,7 @@ class _HomePageState extends State<HomePage> {
 
   createData(){
 
+
   }
 
   updateData(){
@@ -55,8 +59,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   readData(){
+    DocumentReference documentReference = Firestore.instance.collection("Product").document("NmjtsimUgydbsV00Vqf9");
 
-
+    documentReference.get().then((datasnapshot){
+          print(datasnapshot.data["name"]);
+          print(datasnapshot.data["description"]);
+          print(datasnapshot.data["price"]);
+    });
   }
 
 
