@@ -55,7 +55,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   readData(){
-    print("read");
+
+
   }
 
 
