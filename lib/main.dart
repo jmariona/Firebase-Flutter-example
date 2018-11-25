@@ -51,10 +51,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   updateData(){
+    DocumentReference documentReference = Firestore.instance.collection("Product").document(name);
 
+    Map<String, dynamic> _product = {
+        "name" : name,
+        "description": description,
+        "price": price
+
+      };
+
+
+      documentReference.setData(_product).whenComplete((){
+          print("$name created");
+      });
   }
 
   deleteData(){
+
+    DocumentReference documentReference = Firestore.instance.collection("Product").document("NmjtsimUgydbsV00Vqf9");
+
+        documentReference.delete().whenComplete((){
+          print("$name delete");
+        });
+
 
   }
 
