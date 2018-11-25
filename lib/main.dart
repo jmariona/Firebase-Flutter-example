@@ -24,6 +24,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+
   String name, description;
   double price;
 
@@ -46,29 +47,41 @@ class _HomePageState extends State<HomePage> {
 
 
   createData(){
+    DocumentReference documentReference = Firestore.instance.collection("Products").document(name);
+    Map<String, dynamic> _product = {
+      "name" : name,
+      "description": description,
+      "price": price
 
+    };
+
+    documentReference.setData(_product).whenComplete((){
+      print("$name created");
+    });
 
   }
 
-  updateData(){
-    DocumentReference documentReference = Firestore.instance.collection("Product").document(name);
+  updateData()  {
+
+    DocumentReference documentReference = Firestore.instance.collection("Products").document(name);
 
     Map<String, dynamic> _product = {
-        "name" : name,
-        "description": description,
-        "price": price
+      "name" : name,
+      "description": description,
+      "price": price
 
-      };
+    };
 
+    documentReference.updateData(_product).catchError((e){
+      print("error: $e");
+    });
 
-      documentReference.setData(_product).whenComplete((){
-          print("$name created");
-      });
   }
+
 
   deleteData(){
 
-    DocumentReference documentReference = Firestore.instance.collection("Product").document("NmjtsimUgydbsV00Vqf9");
+    DocumentReference documentReference = Firestore.instance.collection("Products").document("cups");
 
         documentReference.delete().whenComplete((){
           print("$name delete");
@@ -78,7 +91,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   readData(){
-    DocumentReference documentReference = Firestore.instance.collection("Product").document("NmjtsimUgydbsV00Vqf9");
+    DocumentReference documentReference = Firestore.instance.collection("Products").document("cups");
 
     documentReference.get().then((datasnapshot){
           print(datasnapshot.data["name"]);
